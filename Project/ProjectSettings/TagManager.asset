@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Checkpoint
+  - DeathZone
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -38,6 +41,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2014278577
+    locked: 0
+  - name: Water
+    uniqueID: 240812811
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 3520387047
+    locked: 0
+  - name: Collectables
+    uniqueID: 2050631025
+    locked: 0
+  - name: Platforms
+    uniqueID: 3576285909
     locked: 0
