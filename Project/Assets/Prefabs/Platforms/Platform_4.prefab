@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4296107515312884}
   - component: {fileID: 212878312750378610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrassLeft (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4239643715655372}
   - component: {fileID: 61407779239643094}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Platform_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4189983468400504}
   - component: {fileID: 212153892085184234}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrassRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4013186412666630}
   - component: {fileID: 68103639772500356}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SlopeLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4374140083982938}
   - component: {fileID: 212657516430958950}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrassHillLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4480008200626096}
   - component: {fileID: 212336481417877044}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GrassHillLeft2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

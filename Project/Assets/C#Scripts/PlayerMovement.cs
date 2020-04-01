@@ -49,9 +49,10 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         else
-        {
+        {   //if no input velocity is 0 - stops the player sliding
             playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
         }
+
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -59,9 +60,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Sets speed and velocity of rigidbody for the player animation
-        //Mathf.Abs = math function that turns a negitive vaule into a positive
+        //Mathf.Abs = math function that turns a negitive vaule into a positive so animation doesn't stop
+        //when player is walking left.
         playerAnim.SetFloat("Speed", Mathf.Abs(playerRigidbody.velocity.x));
-        playerAnim.SetBool("Ground", isGrounded);
+        playerAnim.SetBool("Grounded", isGrounded);
 
     }
 
