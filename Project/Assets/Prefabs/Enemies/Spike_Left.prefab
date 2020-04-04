@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4048555544486558}
   - component: {fileID: 212008961743553990}
   - component: {fileID: 68510166137993184}
+  - component: {fileID: 114636193385367638}
   m_Layer: 0
   m_Name: Spike_Left
   m_TagString: Untagged
@@ -59,6 +60,18 @@ EdgeCollider2D:
   - {x: -0.64701843, y: 0.63977957}
   - {x: 0.6361847, y: 0.0002632141}
   - {x: -0.6325226, y: -0.63978004}
+--- !u!114 &114636193385367638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809200821610144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1bd7b69586ee7d4380068cf3c945658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToGive: 1
 --- !u!212 &212008961743553990
 SpriteRenderer:
   m_ObjectHideFlags: 1

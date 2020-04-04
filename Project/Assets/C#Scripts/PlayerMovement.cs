@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public LevelManager theLevelManager;
 
+
     // Use this for initialization
     void Start () {
 
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         respawnPoint = transform.position;
 
         theLevelManager = FindObjectOfType<LevelManager>();
+        
     }
 	
 	// Update is called once per frame
@@ -80,6 +82,24 @@ public class PlayerMovement : MonoBehaviour
             respawnPoint = other.transform.position;
         }
 
+    }
+
+
+    void onCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform;
+
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
     }
 
 }

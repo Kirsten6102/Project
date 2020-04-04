@@ -1,145 +1,92 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Pathfinding;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Seeker))]
-public class EnemyAI : MonoBehaviour
-{
+public class EnemyAI : MonoBehaviour {
+
+
     public Transform target;
+    public Transform enemyGFX;
 
-    //update path 2 times per second
-    public float updateRate = 2f;
+    public float speed = 200f;
+    public float nextWaypointDistance = 3f;
 
-    private Seeker seeker;
-    private Rigidbody2D rigidBody;
+    Path path;
+    int currentWaypoint = 0;
+    bool reachedEndOfPath = false;
 
-    //The calculted path
-    public Path path;
+    Seeker seeker;
+    Rigidbody2D rb;
 
-    //The AI's speed per second
-    public float speed = 300f;
-    public ForceMode2D fMode;
-
-    [HideInInspector]   //makes sure the bool does not show up in the inspector
-    public bool pathEnded = false;
-
-    //max distance from the AI to waypoint
-    public float nextWaypointDistance = 3;
-    
-    private int currentWaypoint = 0;
-
-    private bool searchPlayer = false;
-       
-
-    void Start()
+	// Use this for initialization
+	void Start ()
     {
         seeker = GetComponent<Seeker>();
-        rigidBody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
 
-        if (target == null)
-        {
-            if (!searchPlayer)
-            {
-                searchPlayer = true;
-                StartCoroutine(SearchForPlayer());
-            }
-            return;
+        //InvokeRepeating allows the UpdatePath function to repeat every .5 seconds
+        InvokeRepeating("UpdatePath", 0f, .5f);
         
+	}
+	
+	// FixedUpdate is called a certain number of times a second
+	void FixedUpdate ()
+    {
+        if (path == null) 
+            return;
+
+        if(currentWaypoint >= path.vectorPath.Count)
+        {
+            reachedEndOfPath = true;
+            return;
+        }else
+        {
+            reachedEndOfPath = false;
         }
 
-        //Starts path from current position to player(target) position
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
+        //normalized makes sure lengh of vector is 1
+        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 force = direction * speed * Time.deltaTime;
 
-        StartCoroutine(UpdatePath ());
+        rb.AddForce(force);
+
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+
+        if (distance < nextWaypointDistance)
+        {
+            currentWaypoint++;
+        }
+
+
+        //flips enemy's graphics
+        if (force.x >= 0.1f)
+        {
+            enemyGFX.localScale = new Vector3(1f, 1f, 0f);
+        }
+        else if (force.x <= -0.1f)
+        {
+            enemyGFX.localScale = new Vector3(-1f, 1f, 0f);
+        }
 
     }
 
-    
-    public void OnPathComplete(Path p)
+
+    void OnPathComplete(Path p)
     {
-        Debug.Log("we got a path, did it have an error?" + p.error);
+        //Debug.Log("we got a path, did it have an error?" + p.error);
         if (!p.error)
         {
             path = p;
-            currentWaypoint = 0;        
+            currentWaypoint = 0;
         }
     }
 
-    IEnumerator SearchForPlayer()
+    //Updates path and looks for player
+    void UpdatePath()
     {
-        GameObject Result = GameObject.FindGameObjectWithTag("Player");
-        if (Result == null)
-        {
-            yield return new WaitForSeconds(1f);
-            StartCoroutine(SearchForPlayer());
-        }
-        else 
-        {
-            target = Result.transform;
-            searchPlayer = false;
-            StartCoroutine(UpdatePath());
-            yield return false;
-
-        }
-    }
-
-    IEnumerator UpdatePath()
-    {
-        if (target == null)
-        {
-            //TODO: insert player search here
-            //return false;
-        }
-
-        //Starts path from current position to player(target) position
-        seeker.StartPath(transform.position, target.position, OnPathComplete);
-        
-        yield return new WaitForSeconds (1f/updateRate);
-        StartCoroutine(UpdatePath());
-    }
-
-    void FixedUpdate()
-    {
-        if (target == null)
-        {
-            //TODO: insert player search here
-            return;
-        }
-
-        //TODO: Always look at player
-
-        if (path == null)
-            return;
-
-        //checks if current waypoint is >= waypoint in array
-        if (currentWaypoint >= path.vectorPath.Count)
-        {
-            if (pathEnded)
-                return;
-
-            Debug.Log("End of path reached");
-            pathEnded = true;
-            return;
-        }
-        else 
-        { 
-            pathEnded = false;
-        }
-        
-        //Direction to next waypoint. subtracting position from waypoint gives direction
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
-
-        //move AI
-        rigidBody.AddForce(dir, fMode);
-
-        if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
-        {
-            currentWaypoint++;
-            return;
-        }
-
+        if (seeker.IsDone())
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
 }

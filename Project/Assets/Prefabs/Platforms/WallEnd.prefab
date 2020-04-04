@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4007180294406500}
   - component: {fileID: 212449874687796722}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4299213296137446}
   - component: {fileID: 61921923196991316}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WallEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4356661925268998}
   - component: {fileID: 212622385253972908}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt
   m_TagString: Untagged
   m_Icon: {fileID: 0}

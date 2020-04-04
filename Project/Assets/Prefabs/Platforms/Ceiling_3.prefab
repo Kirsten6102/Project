@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4512163873994378}
   - component: {fileID: 212691146323287172}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4393959536969260}
   - component: {fileID: 212881202321516912}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4049444532423520}
   - component: {fileID: 212202651558079112}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4694323304378766}
   - component: {fileID: 212939970124379244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4876444767742942}
   - component: {fileID: 61370894470677872}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ceiling_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4889691001478912}
   - component: {fileID: 212340118269371502}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4524386296390252}
   - component: {fileID: 212792089467737470}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dirt (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

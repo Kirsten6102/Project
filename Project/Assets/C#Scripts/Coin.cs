@@ -2,32 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtPlayer : MonoBehaviour {
+public class Coin : MonoBehaviour {
 
     private LevelManager theLevelManager;
-
-    public int damageToGive;
+    public int coinValue;
 
 	// Use this for initialization
-	void Start () {
-
+	void Start ()
+    {
         theLevelManager = FindObjectOfType<LevelManager>();
-
-    }
+	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
-
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
-        {
-            //theLevelManager.Respawn();
-            theLevelManager.HurtPlayer(damageToGive);
 
+        if (other.tag == "Player")
+        {
+            theLevelManager.AddCoins(coinValue);
+
+            Destroy(gameObject);
+              
         }
+
     }
+
+
 }
