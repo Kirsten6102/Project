@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour {
+public class ExtraLife : MonoBehaviour {
 
+    public int lifeToGive;
     private LevelManager theLevelManager;
-    public int coinValue;
 
 	// Use this for initialization
 	void Start ()
@@ -14,22 +14,16 @@ public class Coin : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ()
-    {
+	void Update () {
 		
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.tag == "Player")
+        if(other.tag == "Player")
         {
-            theLevelManager.AddCoins(coinValue);
-            
+            theLevelManager.AddLife(lifeToGive);
             gameObject.SetActive(false);
         }
-
     }
-
-
 }

@@ -8,6 +8,7 @@ TagManager:
   - DeathZone
   - Background
   - MovingPlatform
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - Player
   - Ground
-  - 
+  - Enemy
   - 
   - 
   - 

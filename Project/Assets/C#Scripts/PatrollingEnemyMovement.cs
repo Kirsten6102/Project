@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenEnemyMovement : MonoBehaviour 
+public class PatrollingEnemyMovement : MonoBehaviour 
 {
     public Transform leftPoint;
     public Transform rightPoint;
 
     public float movementSpeed;
     public bool movingRight;
-    private Rigidbody2D enemyRigidbody;
+    private Rigidbody2D enemyRB;
 
-	// Use this for initialization
-	void Start () 
+    public Transform enemyGFX;
+
+    // Use this for initialization
+    void Start () 
     {
-        enemyRigidbody = GetComponent<Rigidbody2D>();
+        enemyRB = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -23,17 +25,20 @@ public class GreenEnemyMovement : MonoBehaviour
         if (movingRight && transform.position.x > rightPoint.position.x)
         {
             movingRight = false;
+            enemyGFX.localScale = new Vector3(1f, 1f, 0f);
         }
         if (!movingRight && transform.position.x < leftPoint.position.x)
         {
             movingRight = true;
+            enemyGFX.localScale = new Vector3(-1f, 1f, 0f);
+            
         }
         if (movingRight)
         {
-            enemyRigidbody.velocity = new Vector3(movementSpeed, enemyRigidbody.velocity.y, 0f);
+            enemyRB.velocity = new Vector3(movementSpeed, enemyRB.velocity.y, 0f);
         } else 
         {
-            enemyRigidbody.velocity = new Vector3(-movementSpeed, enemyRigidbody.velocity.y, 0f);
+            enemyRB.velocity = new Vector3(-movementSpeed, enemyRB.velocity.y, 0f);
         }
 	}
 }

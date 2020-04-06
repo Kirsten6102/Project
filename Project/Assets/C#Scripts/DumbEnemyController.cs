@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//only used for 'dumb' enemies
 
-public class EnemyController : MonoBehaviour 
+public class DumbEnemyController : MonoBehaviour 
 {
     public float movementSpeed;
     private bool canMove;
-    private Rigidbody2D enemyRigidbody;
+    private Rigidbody2D enemyRB;
 
 	// Use this for initialization
 	void Start () 
     {
-        enemyRigidbody = GetComponent<Rigidbody2D>();
+        enemyRB = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -19,7 +20,7 @@ public class EnemyController : MonoBehaviour
     {
         if (canMove)
         {
-            enemyRigidbody.velocity = new Vector3(-movementSpeed, enemyRigidbody.velocity.y, 0f);      
+            enemyRB.velocity = new Vector3(-movementSpeed, enemyRB.velocity.y, 0f);      
         }
 	}
 
@@ -32,8 +33,16 @@ public class EnemyController : MonoBehaviour
     {
         if (other.tag == "DeathZone")
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
+
+    //stops 'dumb' enemies walking as soon as they are respawned
+    //they will wait until player is back in view
+    void OnEnable()
+    {
+        canMove = false;
+    }
+
 
 }

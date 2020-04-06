@@ -20,6 +20,13 @@ public class PlayerMovement : MonoBehaviour
 
     public LevelManager theLevelManager;
 
+    public GameObject stompBox;
+    public float knockForce;
+    public float knockLength;
+    private float knockCounter;
+
+    public float invincibilityLength;
+    private float invincibilityCounter;
 
     // Use this for initialization
     void Start () {
@@ -39,27 +46,46 @@ public class PlayerMovement : MonoBehaviour
         //Checks if player is on ground or not
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        if (Input.GetAxisRaw("Horizontal") > 0f)
+        if (knockCounter <= 0)
         {
-            playerRigidbody.velocity = new Vector3(movementSpeed, playerRigidbody.velocity.y, 0f);
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            if (Input.GetAxisRaw("Horizontal") > 0f)
+            {
+                playerRigidbody.velocity = new Vector3(movementSpeed, playerRigidbody.velocity.y, 0f);
+                transform.localScale = new Vector3(1f, 1f, 1f);
 
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0f)
+            } else if (Input.GetAxisRaw("Horizontal") < 0f)
+            {
+                playerRigidbody.velocity = new Vector3(-movementSpeed, playerRigidbody.velocity.y, 0f);
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            } else
+            {   //if no input velocity is 0 - stops the player sliding
+                playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
+            }
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, jumpSpeed, 0f);
+            }
+        } else if (knockCounter > 0)
         {
-            playerRigidbody.velocity = new Vector3(-movementSpeed, playerRigidbody.velocity.y, 0f);
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-        }
-        else
-        {   //if no input velocity is 0 - stops the player sliding
-            playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
+            knockCounter -= Time.deltaTime;
+            if(transform.localScale.x > 0)
+            {
+                playerRigidbody.velocity = new Vector3(-knockForce, knockForce, 0f);
+            } else
+            {
+                playerRigidbody.velocity = new Vector3(knockForce, knockForce, 0f);
+            }
         }
 
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if(invincibilityCounter > 0)
         {
-            playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, jumpSpeed, 0f);
+            invincibilityCounter -= Time.deltaTime;
+        } else if(invincibilityCounter <= 0)
+        {
+            theLevelManager.invincible = false;
         }
+
 
         //Sets speed and velocity of rigidbody for the player animation
         //Mathf.Abs = math function that turns a negitive vaule into a positive so animation doesn't stop
@@ -67,7 +93,18 @@ public class PlayerMovement : MonoBehaviour
         playerAnim.SetFloat("Speed", Mathf.Abs(playerRigidbody.velocity.x));
         playerAnim.SetBool("Grounded", isGrounded);
 
+
+        if(playerRigidbody.velocity.y < 0)
+        {
+            stompBox.SetActive(true);
+        } else
+        {
+            stompBox.SetActive(false);
+        }
+
     }
+
+
 
     //Trigger death zone and checkpoints
     void OnTriggerEnter2D(Collider2D other)
@@ -85,7 +122,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void onCollisionEnter2D(Collision2D other)
+    //player moves along with moving platforms
+    public void onCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "MovingPlatform")
         {
@@ -94,12 +132,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    public void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.tag == "MovingPlatform")
         {
             transform.parent = null;
         }
+    }
+
+
+    public void KnockBack()
+    {
+        knockCounter = knockLength;
+        invincibilityCounter = invincibilityLength;
+        theLevelManager.invincible = true;
+
     }
 
 }

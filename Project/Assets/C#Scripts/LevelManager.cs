@@ -10,30 +10,42 @@ public class LevelManager : MonoBehaviour
     public GameObject deathParticles;
 
     public int coinCount;
-
     public Text coinText;
 
     public Image heart1;
     public Image heart2;
     public Image heart3;
-
     public Sprite heartFull;
     public Sprite heartHalf;
     public Sprite heartEmpty;
+
+    public int startLives;
+    public int currentLives;
+    public Text livesText;
 
     public int maxHealth;
     public int healthCount;
 
     private bool respawning;
+    private ResetRespawn[] objectsToReset;
+
+    public bool invincible;
+
+    public GameObject gameOverScreen;
 
     // Use this for initialization
     void Start() 
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
 
-        coinText.text = "Coins: " + coinCount;
+        currentLives = startLives;
+        livesText.text = "Lives x " + currentLives;
 
         healthCount = maxHealth;
+
+        coinText.text = "Coins: " + coinCount;
+        
+        objectsToReset = FindObjectsOfType<ResetRespawn>();
 	}
 
     // Update is called once per frame
@@ -49,12 +61,23 @@ public class LevelManager : MonoBehaviour
 
     public void Respawn()
     {
-        StartCoroutine("RespawnCoroutine");
+        currentLives -= 1;
+        livesText.text = "Lives x " + currentLives;
+
+        if(currentLives > 0)
+        {
+            StartCoroutine("RespawnCoroutine");
+        } else
+        {
+            thePlayer.gameObject.SetActive(false);
+            gameOverScreen.SetActive(true);
+        }
+        
     }
     
     public IEnumerator RespawnCoroutine()
     {
-        thePlayer.gameObject.SetActive(false);
+        
 
         //Create death pariticals at the same position as the player
         Instantiate(deathParticles, thePlayer.transform.position, thePlayer.transform.rotation);
@@ -65,6 +88,16 @@ public class LevelManager : MonoBehaviour
         healthCount = maxHealth;
         respawning = false;
         UpdateHealth();
+
+        coinCount = 0;
+        coinText.text = "Coins: " + coinCount;
+
+        for (int i = 0; i < objectsToReset.Length; i++)
+        {
+            objectsToReset[i].gameObject.SetActive(true);
+            objectsToReset[i].ResetWorld();
+        }
+
         thePlayer.transform.position = thePlayer.respawnPoint;
         thePlayer.gameObject.SetActive(true);
     }
@@ -78,10 +111,18 @@ public class LevelManager : MonoBehaviour
 
     public void HurtPlayer(int damageTaken)
     {
-        healthCount -= damageTaken;
-        UpdateHealth();
+        //player cannot be hurt while invincible (are being knocked back)
+        if (!invincible)
+        {
+            healthCount -= damageTaken;
+            UpdateHealth();
+
+            thePlayer.KnockBack();
+        }
+        
     }
 
+    //controls the player's health shown on screen
     public void UpdateHealth()
     {
         switch(healthCount)
@@ -136,4 +177,22 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void AddLife(int livesToAdd)
+    {
+        currentLives += livesToAdd;
+        livesText.text = "Lives x " + currentLives;
+    }
+
+    public void AddHealth(int healthToAdd)
+    {
+        healthCount += healthToAdd;
+
+        //health cannot go over max health
+        if(healthCount > maxHealth)
+        {
+            healthCount = maxHealth;
+        }
+
+        UpdateHealth();
+    }
 }
