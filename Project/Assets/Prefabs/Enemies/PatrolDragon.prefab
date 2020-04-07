@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 50462923966461512}
   - component: {fileID: 114977388404922766}
   - component: {fileID: 114762523629249634}
+  - component: {fileID: 114894662488247236}
   m_Layer: 10
   m_Name: Dragon
   m_TagString: Untagged
@@ -231,11 +232,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f80e9972482a7c4fb7a6ea2db9914f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftPoint: {fileID: 4048078707317172}
-  rightPoint: {fileID: 4117736610676300}
-  movementSpeed: 6
+  leftPoint: {fileID: 0}
+  rightPoint: {fileID: 0}
+  movementSpeed: 0
   movingRight: 0
-  enemyGFX: {fileID: 4050189505219280}
+  enemyGFX: {fileID: 0}
+--- !u!114 &114894662488247236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183657412365258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2f26bab4c40024c9c973053f115b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 20
+  deathParticales: {fileID: 1071466896533534, guid: c0e0583a34bb2a54e81517f8f48436c2,
+    type: 2}
 --- !u!114 &114977388404922766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,8 +294,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -774580249
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b051b6173d6e3a548895c354a884b421, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

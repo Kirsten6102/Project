@@ -154,6 +154,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4546688919324422}
+  - component: {fileID: 114281601119076916}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -559,6 +560,18 @@ EdgeCollider2D:
   - {x: -0.63497925, y: -0.28085828}
   - {x: -0.0015106201, y: 0.6435559}
   - {x: 0.6399994, y: -0.28183675}
+--- !u!114 &114281601119076916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1702855765573454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1bd7b69586ee7d4380068cf3c945658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToGive: 6
 --- !u!212 &212003093157808148
 SpriteRenderer:
   m_ObjectHideFlags: 1

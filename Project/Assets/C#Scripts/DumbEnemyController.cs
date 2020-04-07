@@ -24,6 +24,7 @@ public class DumbEnemyController : MonoBehaviour
         }
 	}
 
+    //enemy starts to move when player can see it
     void OnBecameVisible()
     {
         canMove = true;

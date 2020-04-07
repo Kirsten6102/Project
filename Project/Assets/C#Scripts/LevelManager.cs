@@ -8,9 +8,11 @@ public class LevelManager : MonoBehaviour
     public PlayerMovement thePlayer;
 
     public GameObject deathParticles;
+    public AudioSource deathSound;
 
     public int coinCount;
     public Text coinText;
+    public AudioSource coinPickup;
 
     public Image heart1;
     public Image heart2;
@@ -25,6 +27,7 @@ public class LevelManager : MonoBehaviour
 
     public int maxHealth;
     public int healthCount;
+    public AudioSource itemPickup;
 
     private bool respawning;
     private ResetRespawn[] objectsToReset;
@@ -32,6 +35,8 @@ public class LevelManager : MonoBehaviour
     public bool invincible;
 
     public GameObject gameOverScreen;
+    public AudioSource gameOverMusic;
+    public AudioSource levelMusic;
 
     // Use this for initialization
     void Start() 
@@ -71,17 +76,17 @@ public class LevelManager : MonoBehaviour
         {
             thePlayer.gameObject.SetActive(false);
             gameOverScreen.SetActive(true);
+            levelMusic.Stop();
+            gameOverMusic.Play();
         }
         
     }
     
     public IEnumerator RespawnCoroutine()
     {
-        
-
         //Create death pariticals at the same position as the player
         Instantiate(deathParticles, thePlayer.transform.position, thePlayer.transform.rotation);
-        
+        deathSound.Play();
         //Creates a delay in the respawn
         yield return new WaitForSeconds(respawnDelay);
 
@@ -107,6 +112,7 @@ public class LevelManager : MonoBehaviour
     {
         coinCount += coinsToAdd;
         coinText.text = "Coins: " + coinCount;
+        coinPickup.Play();
     }
 
     public void HurtPlayer(int damageTaken)
@@ -118,6 +124,7 @@ public class LevelManager : MonoBehaviour
             UpdateHealth();
 
             thePlayer.KnockBack();
+            thePlayer.playerDamage.Play();
         }
         
     }
@@ -179,6 +186,7 @@ public class LevelManager : MonoBehaviour
 
     public void AddLife(int livesToAdd)
     {
+        itemPickup.Play();
         currentLives += livesToAdd;
         livesText.text = "Lives x " + currentLives;
     }
@@ -193,6 +201,7 @@ public class LevelManager : MonoBehaviour
             healthCount = maxHealth;
         }
 
+        itemPickup.Play();
         UpdateHealth();
     }
 }

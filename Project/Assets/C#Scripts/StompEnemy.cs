@@ -6,24 +6,25 @@ public class StompEnemy : MonoBehaviour {
 
     private Rigidbody2D playerRB;
 
-    public float bounceForce;
+    //public float bounceForce;
 
-    public GameObject enemyDeathParticals;
+    //public GameObject enemyDeathParticals;
 
     void Start()
     {
-        playerRB = transform.parent.GetComponent<Rigidbody2D>();
+        //playerRB = transform.parent.GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
         {
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
+            //other.gameObject.SetActive(false);
 
-            Instantiate(enemyDeathParticals, other.transform.position, other.transform.rotation);
+            //Instantiate(enemyDeathParticals, other.transform.position, other.transform.rotation);
 
-            playerRB.velocity = new Vector3(playerRB.velocity.x, bounceForce, 0f);
+            //playerRB.velocity = new Vector3(playerRB.velocity.x, bounceForce, 0f);
         }
     }
 

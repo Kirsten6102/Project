@@ -21,7 +21,7 @@ TagManager:
   - Player
   - Ground
   - Enemy
-  - 
+  - Effects
   - 
   - 
   - 
@@ -52,14 +52,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Foreground
-    uniqueID: 3520387047
+  - name: Environment
+    uniqueID: 262582089
     locked: 0
   - name: Collectables
     uniqueID: 2050631025
     locked: 0
   - name: Platforms
     uniqueID: 3576285909
+    locked: 0
+  - name: Effects
+    uniqueID: 157411713
+    locked: 0
+  - name: Enemy
+    uniqueID: 3520387047
     locked: 0
   - name: Player
     uniqueID: 3336110925

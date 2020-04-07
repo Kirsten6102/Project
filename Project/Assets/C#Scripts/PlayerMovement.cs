@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask whatIsGround;
-
     public bool isGrounded;
 
     private Animator playerAnim;
@@ -27,6 +26,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float invincibilityLength;
     private float invincibilityCounter;
+
+    public AudioSource jumpSound;
+    public AudioSource playerDamage;
+
+    public GameObject firePoint;
 
     // Use this for initialization
     void Start () {
@@ -51,12 +55,17 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") > 0f)
             {
                 playerRigidbody.velocity = new Vector3(movementSpeed, playerRigidbody.velocity.y, 0f);
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                //transform.localScale = new Vector3(1f, 1f, 1f);
+                //transform.rotate(0f, 0f, 0f);
+                //eulerAngles stores the rotation of a game object 
+                transform.eulerAngles = new Vector3(0f, 0f, 0f);
 
             } else if (Input.GetAxisRaw("Horizontal") < 0f)
             {
                 playerRigidbody.velocity = new Vector3(-movementSpeed, playerRigidbody.velocity.y, 0f);
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+                //transform.localScale = new Vector3(-1f, 1f, 1f);
+                //Flip();
+                transform.eulerAngles = new Vector3(0f, 180f, 0f);
             } else
             {   //if no input velocity is 0 - stops the player sliding
                 playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
@@ -65,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, jumpSpeed, 0f);
+                jumpSound.Play();
             }
         } else if (knockCounter > 0)
         {
@@ -78,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        
         if(invincibilityCounter > 0)
         {
             invincibilityCounter -= Time.deltaTime;
@@ -147,6 +158,11 @@ public class PlayerMovement : MonoBehaviour
         invincibilityCounter = invincibilityLength;
         theLevelManager.invincible = true;
 
+    }
+
+    private void Flip()
+    {
+        transform.Rotate(0f, 180f, 0f);
     }
 
 }
