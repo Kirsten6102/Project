@@ -70,3 +70,6 @@ TagManager:
   - name: Player
     uniqueID: 3336110925
     locked: 0
+  - name: Secert Wall
+    uniqueID: 655820047
+    locked: 0

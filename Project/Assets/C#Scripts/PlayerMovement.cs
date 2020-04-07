@@ -4,8 +4,9 @@ public class PlayerMovement : MonoBehaviour
 {
     //Movement and jump values
     public float movementSpeed;
-    private Rigidbody2D playerRigidbody;
+    public Rigidbody2D playerRigidbody;
     public float jumpSpeed;
+    public bool canMove;
 
     //Values used to check if player is on the ground
     public Transform groundCheck;
@@ -41,7 +42,8 @@ public class PlayerMovement : MonoBehaviour
         respawnPoint = transform.position;
 
         theLevelManager = FindObjectOfType<LevelManager>();
-        
+
+        canMove = true;
     }
 	
 	// Update is called once per frame
@@ -50,21 +52,17 @@ public class PlayerMovement : MonoBehaviour
         //Checks if player is on ground or not
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        if (knockCounter <= 0)
+        if (knockCounter <= 0 && canMove)
         {
             if (Input.GetAxisRaw("Horizontal") > 0f)
             {
                 playerRigidbody.velocity = new Vector3(movementSpeed, playerRigidbody.velocity.y, 0f);
-                //transform.localScale = new Vector3(1f, 1f, 1f);
-                //transform.rotate(0f, 0f, 0f);
                 //eulerAngles stores the rotation of a game object 
                 transform.eulerAngles = new Vector3(0f, 0f, 0f);
 
             } else if (Input.GetAxisRaw("Horizontal") < 0f)
             {
                 playerRigidbody.velocity = new Vector3(-movementSpeed, playerRigidbody.velocity.y, 0f);
-                //transform.localScale = new Vector3(-1f, 1f, 1f);
-                //Flip();
                 transform.eulerAngles = new Vector3(0f, 180f, 0f);
             } else
             {   //if no input velocity is 0 - stops the player sliding
@@ -99,8 +97,8 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Sets speed and velocity of rigidbody for the player animation
-        //Mathf.Abs = math function that turns a negitive vaule into a positive so animation doesn't stop
-        //when player is walking left.
+        /*Mathf.Abs = math function that turns a negitive vaule into a positive so animation doesn't stop
+        when player is walking left.*/
         playerAnim.SetFloat("Speed", Mathf.Abs(playerRigidbody.velocity.x));
         playerAnim.SetBool("Grounded", isGrounded);
 
@@ -158,11 +156,6 @@ public class PlayerMovement : MonoBehaviour
         invincibilityCounter = invincibilityLength;
         theLevelManager.invincible = true;
 
-    }
-
-    private void Flip()
-    {
-        transform.Rotate(0f, 180f, 0f);
     }
 
 }

@@ -25,7 +25,6 @@ public class HurtPlayer : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            //theLevelManager.Respawn();
             theLevelManager.HurtPlayer(damageToGive);
 
         }

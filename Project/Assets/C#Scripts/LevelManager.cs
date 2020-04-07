@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverScreen;
     public AudioSource gameOverMusic;
     public AudioSource levelMusic;
+    public AudioSource CompleteLevelSound;
 
     // Use this for initialization
     void Start() 
@@ -71,6 +72,7 @@ public class LevelManager : MonoBehaviour
 
         if(currentLives > 0)
         {
+            thePlayer.gameObject.SetActive(false);
             StartCoroutine("RespawnCoroutine");
         } else
         {
