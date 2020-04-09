@@ -2,46 +2,6 @@
 
 public class CameraMovement : MonoBehaviour {
 
-
-    //public GameObject target;
-    //public float followDistance;
-
-    //private Vector3 offset;
-    //public float smoothMovement;
-    //private Vector3 targetPosition;
-
-    //void Start()
-    //{
-    //    offset = transform.position - target.transform.position;
-
-    //}
-
-    //void Update()
-    //{
-    //    //moves camera ahead if facing right or back if facing left
-    //           if (target.transform.localScale.x > 0f)
-    //    {
-    //        targetPosition = new Vector3(targetPosition.x + followDistance, targetPosition.y, targetPosition.z);
-    //    }
-    //    else
-    //    {
-    //        targetPosition = new Vector3(targetPosition.x - followDistance, targetPosition.y, targetPosition.z);
-    //    }
-
-    //    //transform.position = targetPosition;
-
-    //    transform.position = Vector3.Lerp(transform.position, targetPosition, smoothMovement = Time.deltaTime);
-
-    //}
-
-    //void LateUpdate()
-    //{
-    //    transform.position = target.transform.position + offset;
-
-    //}
-
-
-
     public GameObject target;
     public float followDistance;
 
@@ -75,9 +35,7 @@ public class CameraMovement : MonoBehaviour {
             {
                 targetPosition = new Vector3(targetPosition.x - followDistance, targetPosition.y, targetPosition.z);
             }
-
-            transform.position = Vector3.Lerp(transform.position, targetPosition, smoothMovement = Time.deltaTime);
-
+            
         }
         
     }

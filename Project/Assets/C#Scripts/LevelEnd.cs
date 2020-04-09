@@ -54,6 +54,10 @@ public class LevelEnd : MonoBehaviour {
 
         thePlayer.playerRigidbody.velocity = Vector3.zero;
 
+        //PlayerPrefs is a built in utility that retrains data between scenes
+        PlayerPrefs.SetInt("CoinCount", theLevelManager.coinCount);
+        PlayerPrefs.SetInt("PlayerLives", theLevelManager.currentLives);
+
         yield return new WaitForSeconds(waitToMove);
         movePlayer = true;
 

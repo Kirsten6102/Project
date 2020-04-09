@@ -44,10 +44,22 @@ public class LevelManager : MonoBehaviour
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
 
-        currentLives = startLives;
+        healthCount = maxHealth;
+
+        if(PlayerPrefs.HasKey("PlayerLives"))
+        {
+            currentLives = PlayerPrefs.GetInt("PlayerLives");
+        } else
+        {
+            currentLives = startLives;
+        }
+        
         livesText.text = "Lives x " + currentLives;
 
-        healthCount = maxHealth;
+        if (PlayerPrefs.HasKey("CoinCount"))
+        {
+            coinCount = PlayerPrefs.GetInt("CoinCount");
+        }
 
         coinText.text = "Coins: " + coinCount;
         

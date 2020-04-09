@@ -12,6 +12,7 @@ public class MovingObject : MonoBehaviour {
 
     public float moveSpeed;
 
+
     //target location object is moving towards
     private Vector3 currentTarget;
 

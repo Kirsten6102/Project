@@ -25,12 +25,6 @@ public class ResetRespawn : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
     public void ResetWorld()
     {
         transform.position = startPosition;

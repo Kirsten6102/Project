@@ -131,23 +131,51 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    //player moves along with moving platforms
-    public void onCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "MovingPlatform")
+        if(other.gameObject.tag == "MovingPlatform")
         {
-            transform.parent = other.transform;
-
+            transform.parent = other.gameObject.transform;
         }
     }
 
-    public void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            transform.parent = null;
-        }
-    }
+
+    //void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if (col.gameObject.name.Equals("MovingPlatform"))
+    //    {
+    //        this.transform.parent = col.transform;
+    //    }
+
+    //}
+
+
+    //void OnCollisionExit2D(Collision2D col)
+    //{
+    //    if (col.gameObject.name.Equals("MovingPlatform"))
+    //    {
+    //        this.transform.parent = null;
+    //    }
+
+    //}
+
+    ////player moves along with moving platforms
+    //public void onCollisionEnter2D(Collision2D other)
+    //{
+    //    if (other.gameObject.tag == "MovingPlatform")
+    //    {
+    //        transform.parent = other.transform;
+
+    //    }
+    //}
+
+    //public void OnCollisionExit2D(Collision2D other)
+    //{
+    //    if (other.gameObject.tag == "MovingPlatform")
+    //    {
+    //        transform.parent = null;
+    //    }
+    //}
 
 
     public void KnockBack()
