@@ -4,6 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     //Movement and jump values
     public float movementSpeed;
+    public float sprintSpeed = 1.5f;
     public Rigidbody2D playerRigidbody;
     public float jumpSpeed;
     public bool canMove;
@@ -59,11 +60,26 @@ public class PlayerMovement : MonoBehaviour
                 playerRigidbody.velocity = new Vector3(movementSpeed, playerRigidbody.velocity.y, 0f);
                 //eulerAngles stores the rotation of a game object 
                 transform.eulerAngles = new Vector3(0f, 0f, 0f);
-
+                if (Input.GetButton("Sprint"))
+                {
+                    movementSpeed = 30f;
+                } else
+                {
+                    movementSpeed = 15f;
+                }
+                
             } else if (Input.GetAxisRaw("Horizontal") < 0f)
             {
                 playerRigidbody.velocity = new Vector3(-movementSpeed, playerRigidbody.velocity.y, 0f);
                 transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                if (Input.GetButton("Sprint"))
+                {
+                    movementSpeed = 30f;
+                }
+                else
+                {
+                    movementSpeed = 15f;
+                }
             } else
             {   //if no input velocity is 0 - stops the player sliding
                 playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
@@ -92,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             invincibilityCounter -= Time.deltaTime;
         } else if(invincibilityCounter <= 0)
         {
-            theLevelManager.invincible = false;
+            theLevelManager.isInvincible = false;
         }
 
 
@@ -138,51 +154,13 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = other.gameObject.transform;
         }
     }
-
-
-    //void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if (col.gameObject.name.Equals("MovingPlatform"))
-    //    {
-    //        this.transform.parent = col.transform;
-    //    }
-
-    //}
-
-
-    //void OnCollisionExit2D(Collision2D col)
-    //{
-    //    if (col.gameObject.name.Equals("MovingPlatform"))
-    //    {
-    //        this.transform.parent = null;
-    //    }
-
-    //}
-
-    ////player moves along with moving platforms
-    //public void onCollisionEnter2D(Collision2D other)
-    //{
-    //    if (other.gameObject.tag == "MovingPlatform")
-    //    {
-    //        transform.parent = other.transform;
-
-    //    }
-    //}
-
-    //public void OnCollisionExit2D(Collision2D other)
-    //{
-    //    if (other.gameObject.tag == "MovingPlatform")
-    //    {
-    //        transform.parent = null;
-    //    }
-    //}
-
+    
 
     public void KnockBack()
     {
         knockCounter = knockLength;
         invincibilityCounter = invincibilityLength;
-        theLevelManager.invincible = true;
+        theLevelManager.isInvincible = true;
 
     }
 

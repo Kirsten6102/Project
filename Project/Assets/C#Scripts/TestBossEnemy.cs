@@ -2,29 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
-
+public class TestBossEnemy : MonoBehaviour {
 
     public int health;
 
     public GameObject deathParticales;
 
-    public GameObject levelComplete;
+    //public GameObject levelComplete;
+    public GameObject levelWin;
 
-    private LevelManager theLevelManager;
-
-    // Use this for initialization
-    void Start()
-    {
-        theLevelManager = FindObjectOfType<LevelManager>();
-    }
-
-
-    public void TakeDamage (int Damage)
+    public void TakeDamage(int Damage)
     {
         health -= Damage;
 
-        if(health <= 0)
+        if (health <= 0)
         {
             Die();
         }
@@ -34,8 +25,8 @@ public class Enemy : MonoBehaviour {
     {
         Instantiate(deathParticales, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
-        levelComplete.SetActive(true);
+        levelWin.SetActive(true);
+        //levelComplete.SetActive(true);
     }
 
-   
 }

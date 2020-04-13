@@ -230,10 +230,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6bbd345482be17d47a989ed99d2bb919, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -736,3 +736,4 @@ MonoBehaviour:
   gameOverMusic: {fileID: 82915521178880754}
   levelMusic: {fileID: 82336967334715466}
   CompleteLevelSound: {fileID: 82591358991211776}
+  respawnCoActive: 0

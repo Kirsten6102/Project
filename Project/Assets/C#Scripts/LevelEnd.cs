@@ -47,9 +47,9 @@ public class LevelEnd : MonoBehaviour {
     {
         thePlayer.canMove = false;
         theCamera.followTarget = false;
-        theLevelManager.invincible = true;
+        theLevelManager.isInvincible = true;
 
-        theLevelManager.levelMusic.Stop();
+        theLevelManager.mainLevelMusic.Stop();
         theLevelManager.CompleteLevelSound.Play();
 
         thePlayer.playerRigidbody.velocity = Vector3.zero;
@@ -57,6 +57,7 @@ public class LevelEnd : MonoBehaviour {
         //PlayerPrefs is a built in utility that retrains data between scenes
         PlayerPrefs.SetInt("CoinCount", theLevelManager.coinCount);
         PlayerPrefs.SetInt("PlayerLives", theLevelManager.currentLives);
+        PlayerPrefs.SetInt("PlayerHealth", theLevelManager.healthCount);
 
         yield return new WaitForSeconds(waitToMove);
         movePlayer = true;

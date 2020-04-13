@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class LevelManager : MonoBehaviour 
 {
@@ -8,15 +11,16 @@ public class LevelManager : MonoBehaviour
     public PlayerMovement thePlayer;
 
     public GameObject deathParticles;
-    public AudioSource deathSound;
+    public AudioSource playerDeathSound;
 
     public int coinCount;
+    public int coinBounsLife;
     public Text coinText;
     public AudioSource coinPickup;
-
-    public Image heart1;
-    public Image heart2;
-    public Image heart3;
+    
+    public Image heartImage1;
+    public Image heartImage2;
+    public Image heartImage3;
     public Sprite heartFull;
     public Sprite heartHalf;
     public Sprite heartEmpty;
@@ -29,32 +33,44 @@ public class LevelManager : MonoBehaviour
     public int healthCount;
     public AudioSource itemPickup;
 
-    private bool respawning;
-    private ResetRespawn[] objectsToReset;
+    private bool isRespawning;
+    private ResetRespawn[] resetObjects;
 
-    public bool invincible;
+    public bool isInvincible;
 
     public GameObject gameOverScreen;
     public AudioSource gameOverMusic;
-    public AudioSource levelMusic;
+    public AudioSource mainLevelMusic;
     public AudioSource CompleteLevelSound;
+
+    public bool respawnCoActive;
 
     // Use this for initialization
     void Start() 
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
+        mainLevelMusic.Play();
 
-        healthCount = maxHealth;
+        if (PlayerPrefs.HasKey("PlayerHealth"))
+        {
+            healthCount = PlayerPrefs.GetInt("PlayerHealth");
+        } else
+        {
+            healthCount = maxHealth;
+        }
+        
 
-        if(PlayerPrefs.HasKey("PlayerLives"))
+        if (PlayerPrefs.HasKey("PlayerLives"))
         {
             currentLives = PlayerPrefs.GetInt("PlayerLives");
+            UpdateHealth();
         } else
         {
             currentLives = startLives;
         }
         
         livesText.text = "Lives x " + currentLives;
+
 
         if (PlayerPrefs.HasKey("CoinCount"))
         {
@@ -63,16 +79,25 @@ public class LevelManager : MonoBehaviour
 
         coinText.text = "Coins: " + coinCount;
         
-        objectsToReset = FindObjectsOfType<ResetRespawn>();
+        resetObjects = FindObjectsOfType<ResetRespawn>();
+        
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if(healthCount <= 0 && !respawning)
+        if(healthCount <= 0 && !isRespawning)
         {
             Respawn();
-            respawning = true;
+            isRespawning = true;
+        }
+
+        if(coinBounsLife >= 20)
+        {
+            currentLives += 1;
+            livesText.text = "Lives x " + currentLives;
+            coinBounsLife -= 20;
+            itemPickup.Play();
         }
     }
 
@@ -90,7 +115,7 @@ public class LevelManager : MonoBehaviour
         {
             thePlayer.gameObject.SetActive(false);
             gameOverScreen.SetActive(true);
-            levelMusic.Stop();
+            mainLevelMusic.Stop();
             gameOverMusic.Play();
         }
         
@@ -98,23 +123,27 @@ public class LevelManager : MonoBehaviour
     
     public IEnumerator RespawnCoroutine()
     {
+        respawnCoActive = true;
+        
         //Create death pariticals at the same position as the player
         Instantiate(deathParticles, thePlayer.transform.position, thePlayer.transform.rotation);
-        deathSound.Play();
+        playerDeathSound.Play();
         //Creates a delay in the respawn
         yield return new WaitForSeconds(respawnDelay);
 
+        respawnCoActive = false;
         healthCount = maxHealth;
-        respawning = false;
+        isRespawning = false;
         UpdateHealth();
 
         coinCount = 0;
         coinText.text = "Coins: " + coinCount;
+        coinBounsLife = 0;
 
-        for (int i = 0; i < objectsToReset.Length; i++)
+        for (int i = 0; i < resetObjects.Length; i++)
         {
-            objectsToReset[i].gameObject.SetActive(true);
-            objectsToReset[i].ResetWorld();
+            resetObjects[i].gameObject.SetActive(true);
+            resetObjects[i].ResetWorld();
         }
 
         thePlayer.transform.position = thePlayer.respawnPoint;
@@ -125,14 +154,16 @@ public class LevelManager : MonoBehaviour
     public void AddCoins(int coinsToAdd)
     {
         coinCount += coinsToAdd;
+        coinBounsLife += coinsToAdd;
         coinText.text = "Coins: " + coinCount;
         coinPickup.Play();
     }
+    
 
     public void HurtPlayer(int damageTaken)
     {
         //player cannot be hurt while invincible (are being knocked back)
-        if (!invincible)
+        if (!isInvincible)
         {
             healthCount -= damageTaken;
             UpdateHealth();
@@ -149,51 +180,51 @@ public class LevelManager : MonoBehaviour
         switch(healthCount)
         {
             case 6:
-                heart1.sprite = heartFull;
-                heart2.sprite = heartFull;
-                heart3.sprite = heartFull;
+                heartImage1.sprite = heartFull;
+                heartImage2.sprite = heartFull;
+                heartImage3.sprite = heartFull;
                 return;
 
             case 5:
-                heart1.sprite = heartFull;
-                heart2.sprite = heartFull;
-                heart3.sprite = heartHalf;
+                heartImage1.sprite = heartFull;
+                heartImage2.sprite = heartFull;
+                heartImage3.sprite = heartHalf;
                 return;
 
             case 4:
-                heart1.sprite = heartFull;
-                heart2.sprite = heartFull;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartFull;
+                heartImage2.sprite = heartFull;
+                heartImage3.sprite = heartEmpty;
                 return;
 
             case 3:
-                heart1.sprite = heartFull;
-                heart2.sprite = heartHalf;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartFull;
+                heartImage2.sprite = heartHalf;
+                heartImage3.sprite = heartEmpty;
                 return;
 
             case 2:
-                heart1.sprite = heartFull;
-                heart2.sprite = heartEmpty;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartFull;
+                heartImage2.sprite = heartEmpty;
+                heartImage3.sprite = heartEmpty;
                 return;
 
             case 1:
-                heart1.sprite = heartHalf;
-                heart2.sprite = heartEmpty;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartHalf;
+                heartImage2.sprite = heartEmpty;
+                heartImage3.sprite = heartEmpty;
                 return;
 
             case 0:
-                heart1.sprite = heartEmpty;
-                heart2.sprite = heartEmpty;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartEmpty;
+                heartImage2.sprite = heartEmpty;
+                heartImage3.sprite = heartEmpty;
                 return;
 
             default:
-                heart1.sprite = heartEmpty;
-                heart2.sprite = heartEmpty;
-                heart3.sprite = heartEmpty;
+                heartImage1.sprite = heartEmpty;
+                heartImage2.sprite = heartEmpty;
+                heartImage3.sprite = heartEmpty;
                 return;
         }
     }
@@ -218,4 +249,87 @@ public class LevelManager : MonoBehaviour
         itemPickup.Play();
         UpdateHealth();
     }
+
+    //public void Save()
+    //{
+    //    BinaryFormatter bf = new BinaryFormatter();
+    //    FileStream file = File.Open(Application.persistentDataPath + "/GameSave.dat", FileMode.Open);
+
+    //    PlayerData data = new PlayerData();
+    //    data.health = healthCount;
+    //    data.coinCount = coinCount;
+    //    data.coinBounsLife = coinBounsLife;
+    //    data.currentLives = currentLives;
+
+    //    bf.Serialize(file, data);
+    //    file.Close();
+
+    //}
+
+    //public void SaveGame()
+    //{
+    //    BinaryFormatter formatter = new BinaryFormatter();
+
+    //    //Application.persistnetDataPath will find and use a system file path that is unlikely to change
+    //    string path = Application.persistentDataPath + "/Gamesave.dat";
+    //    FileStream file = new FileStream(path, FileMode.Create);
+
+    //    PlayerData data = new PlayerData();
+    //    ////data.health = healthCount;
+    //    ////data.coinCount = coinCount;
+    //    ////data.coinBounsLife = coinBounsLife;
+    //    ////data.currentLives = currentLives;
+
+    //    formatter.Serialize(file, data);
+    //    file.Close();
+
+    //}
+
+
+    //public void LoadGame()
+    //{
+    //    string path = Application.persistentDataPath + "/Gamesave.dat";
+
+    //    if (File.Exists(path))
+    //    {
+    //        BinaryFormatter formatter = new BinaryFormatter();
+    //        FileStream file = new FileStream(path, FileMode.Open);
+
+    //        PlayerData data = formatter.Deserialize(file) as PlayerData;
+    //        file.Close();
+
+    //        healthCount = data.health;
+    //        coinCount = data.coinCount;
+    //        coinBounsLife = data.coinBounsLife;
+    //        currentLives = data.currentLives;
+    //        //public int activeScene;
+
+    //        //Vector3 respawnPoint;
+    //        //respawnPoint.x = data.respawnPoint[0];
+    //        //respawnPoint.y = data.respawnPoint[1];
+    //        //respawnPoint.z = data.respawnPoint[2];
+    //        //transform.position = respawnPoint;
+
+
+    //        //return data;
+
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Save file not found in " + path);
+    //        //return null;
+    //    }
+    //}
+    
 }
+
+//[Serializable]
+//class PlayerData
+//{
+//    public int health;
+//    public int coinCount;
+//    public int coinBounsLife;
+//    public int currentLives;
+//    public int activeScene;
+//}
+

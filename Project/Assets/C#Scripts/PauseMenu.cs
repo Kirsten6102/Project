@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour {
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
         theLevelManager = FindObjectOfType<LevelManager>();
+        pauseScreen.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -41,7 +42,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0;
 
         thePlayer.canMove = false;
-        theLevelManager.levelMusic.Pause();
+        theLevelManager.mainLevelMusic.Pause();
 
         pauseScreen.SetActive(true);
     }
@@ -49,7 +50,7 @@ public class PauseMenu : MonoBehaviour {
     public void Resume()
     {
         thePlayer.canMove = true;
-        theLevelManager.levelMusic.Play();
+        theLevelManager.mainLevelMusic.Play();
 
         pauseScreen.SetActive(false);
 
