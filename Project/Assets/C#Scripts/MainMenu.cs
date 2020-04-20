@@ -13,10 +13,14 @@ public class MainMenu : MonoBehaviour {
     {
         SceneManager.LoadScene(firstLevel);
 
-        PlayerPrefs.SetInt("CoinCount", 0);
+        PlayerPrefs.SetInt("CoinsCollected", 0);
         PlayerPrefs.SetInt("PlayerLives", startLives);
+        PlayerPrefs.SetInt("Experience", 0);
+        PlayerPrefs.SetInt("ExperienceForLvl", 0);
+        PlayerPrefs.SetInt("PlayerLevel", 1);
     }
-    
+
+
     //loads saved game
     public void Continue()
     {

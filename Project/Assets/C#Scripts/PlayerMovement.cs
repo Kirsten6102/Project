@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 respawnPoint;
 
-    public LevelManager theLevelManager;
+    public LevelManager levelManager;
 
     public GameObject stompBox;
     public float knockForce;
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         respawnPoint = transform.position;
 
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
 
         canMove = true;
     }
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
             invincibilityCounter -= Time.deltaTime;
         } else if(invincibilityCounter <= 0)
         {
-            theLevelManager.isInvincible = false;
+            levelManager.canBeHurt = false;
         }
 
 
@@ -136,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.tag == "DeathZone")
         {
-            theLevelManager.Respawn();
+            levelManager.Respawn();
         }
 
         if (other.tag == "Checkpoint")
@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
     {
         knockCounter = knockLength;
         invincibilityCounter = invincibilityLength;
-        theLevelManager.isInvincible = true;
+        levelManager.canBeHurt = true;
 
     }
 

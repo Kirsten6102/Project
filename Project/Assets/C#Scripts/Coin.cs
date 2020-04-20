@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour {
 
-    private LevelManager theLevelManager;
+    private LevelManager levelManager;
     public int coinValue;
+    public int expPoints;
 
 	// Use this for initialization
 	void Start ()
     {
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.tag == "Player")
         {
-            theLevelManager.AddCoins(coinValue);
+            levelManager.AddCoins(coinValue);
+            levelManager.experience += expPoints;
+            levelManager.experienceForLvl += expPoints;
             
             gameObject.SetActive(false);
         }

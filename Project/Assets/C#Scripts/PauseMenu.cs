@@ -10,14 +10,14 @@ public class PauseMenu : MonoBehaviour {
 
     public GameObject pauseScreen;
 
-    private LevelManager theLevelManager;
+    private LevelManager levelManager;
     private PlayerMovement thePlayer;
 
 	// Use this for initialization
 	void Start ()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         pauseScreen.SetActive(false);
 	}
 	
@@ -42,7 +42,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0;
 
         thePlayer.canMove = false;
-        theLevelManager.mainLevelMusic.Pause();
+        levelManager.levelMusic.Pause();
 
         pauseScreen.SetActive(true);
     }
@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour {
     public void Resume()
     {
         thePlayer.canMove = true;
-        theLevelManager.mainLevelMusic.Play();
+        levelManager.levelMusic.Play();
 
         pauseScreen.SetActive(false);
 

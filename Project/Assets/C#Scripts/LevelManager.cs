@@ -13,50 +13,59 @@ public class LevelManager : MonoBehaviour
     public GameObject deathParticles;
     public AudioSource playerDeathSound;
 
-    public int coinCount;
-    public int coinBounsLife;
+    public int coinsCollected;
+    public int bounsLifeForCoins;
     public Text coinText;
     public AudioSource coinPickup;
     
     public Image heartImage1;
     public Image heartImage2;
     public Image heartImage3;
-    public Sprite heartFull;
-    public Sprite heartHalf;
-    public Sprite heartEmpty;
+    public Sprite fullHeart;
+    public Sprite halfHeart;
+    public Sprite noHeart;
 
     public int startLives;
     public int currentLives;
     public Text livesText;
 
     public int maxHealth;
-    public int healthCount;
+    public int health;
     public AudioSource itemPickup;
 
     private bool isRespawning;
     private ResetRespawn[] resetObjects;
 
-    public bool isInvincible;
+    public int experience;
+    public int experienceForLvl;
+    public int expLevel;
+    public Text expText;
+    public Text expLevelText;
+    
+
+    public bool canBeHurt;
 
     public GameObject gameOverScreen;
     public AudioSource gameOverMusic;
-    public AudioSource mainLevelMusic;
-    public AudioSource CompleteLevelSound;
+    public AudioSource levelMusic;
+    public AudioSource completeLevelSound;
 
-    public bool respawnCoActive;
+    public bool respawnCoroActive;
+
+    
 
     // Use this for initialization
     void Start() 
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        mainLevelMusic.Play();
+        levelMusic.Play();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
         {
-            healthCount = PlayerPrefs.GetInt("PlayerHealth");
+            health = PlayerPrefs.GetInt("PlayerHealth");
         } else
         {
-            healthCount = maxHealth;
+            health = maxHealth;
         }
         
 
@@ -72,31 +81,63 @@ public class LevelManager : MonoBehaviour
         livesText.text = "Lives x " + currentLives;
 
 
-        if (PlayerPrefs.HasKey("CoinCount"))
+        if (PlayerPrefs.HasKey("CoinsCollected"))
         {
-            coinCount = PlayerPrefs.GetInt("CoinCount");
+            coinsCollected = PlayerPrefs.GetInt("CoinsCollected");
         }
 
-        coinText.text = "Coins: " + coinCount;
+        coinText.text = "Coins: " + coinsCollected;
+
+
+        if (PlayerPrefs.HasKey("Experience"))
+        {
+            experience = PlayerPrefs.GetInt("Experience");
+        }
+
+        expText.text = "XP: " + experience;
+
+
+        if (PlayerPrefs.HasKey("ExperienceForLvl"))
+        {
+            experienceForLvl = PlayerPrefs.GetInt("ExperienceForLvl");
+        }
+
+
+        if (PlayerPrefs.HasKey("PlayerLevel"))
+        {
+            expLevel = PlayerPrefs.GetInt("PlayerLevel");
+        }
+
+        expLevelText.text = "Lvl: " + expLevel;
         
         resetObjects = FindObjectsOfType<ResetRespawn>();
         
-	}
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(healthCount <= 0 && !isRespawning)
+        if(health <= 0 && !isRespawning)
         {
             Respawn();
             isRespawning = true;
         }
 
-        if(coinBounsLife >= 20)
+        expText.text = "XP: " + experience;
+
+        if (experienceForLvl >= 100)
+        {
+            expLevel += 1;
+            expLevelText.text = "Lvl: " + expLevel;
+            experienceForLvl -= 100;
+        }
+ 
+
+        if (bounsLifeForCoins >= 20)
         {
             currentLives += 1;
             livesText.text = "Lives x " + currentLives;
-            coinBounsLife -= 20;
+            bounsLifeForCoins -= 20;
             itemPickup.Play();
         }
     }
@@ -115,7 +156,7 @@ public class LevelManager : MonoBehaviour
         {
             thePlayer.gameObject.SetActive(false);
             gameOverScreen.SetActive(true);
-            mainLevelMusic.Stop();
+            levelMusic.Stop();
             gameOverMusic.Play();
         }
         
@@ -123,7 +164,7 @@ public class LevelManager : MonoBehaviour
     
     public IEnumerator RespawnCoroutine()
     {
-        respawnCoActive = true;
+        respawnCoroActive = true;
         
         //Create death pariticals at the same position as the player
         Instantiate(deathParticles, thePlayer.transform.position, thePlayer.transform.rotation);
@@ -131,14 +172,16 @@ public class LevelManager : MonoBehaviour
         //Creates a delay in the respawn
         yield return new WaitForSeconds(respawnDelay);
 
-        respawnCoActive = false;
-        healthCount = maxHealth;
+        respawnCoroActive = false;
+        health = maxHealth;
         isRespawning = false;
         UpdateHealth();
 
-        coinCount = 0;
-        coinText.text = "Coins: " + coinCount;
-        coinBounsLife = 0;
+        coinsCollected = 0;
+        coinText.text = "Coins: " + coinsCollected;
+        bounsLifeForCoins = 0;
+        experience = 0;
+        expText.text = "XP: " + experience;
 
         for (int i = 0; i < resetObjects.Length; i++)
         {
@@ -153,9 +196,9 @@ public class LevelManager : MonoBehaviour
 
     public void AddCoins(int coinsToAdd)
     {
-        coinCount += coinsToAdd;
-        coinBounsLife += coinsToAdd;
-        coinText.text = "Coins: " + coinCount;
+        coinsCollected += coinsToAdd;
+        bounsLifeForCoins += coinsToAdd;
+        coinText.text = "Coins: " + coinsCollected;
         coinPickup.Play();
     }
     
@@ -163,9 +206,9 @@ public class LevelManager : MonoBehaviour
     public void HurtPlayer(int damageTaken)
     {
         //player cannot be hurt while invincible (are being knocked back)
-        if (!isInvincible)
+        if (!canBeHurt)
         {
-            healthCount -= damageTaken;
+            health -= damageTaken;
             UpdateHealth();
 
             thePlayer.KnockBack();
@@ -177,54 +220,54 @@ public class LevelManager : MonoBehaviour
     //controls the player's health shown on screen
     public void UpdateHealth()
     {
-        switch(healthCount)
+        switch(health)
         {
             case 6:
-                heartImage1.sprite = heartFull;
-                heartImage2.sprite = heartFull;
-                heartImage3.sprite = heartFull;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = fullHeart;
+                heartImage3.sprite = fullHeart;
                 return;
 
             case 5:
-                heartImage1.sprite = heartFull;
-                heartImage2.sprite = heartFull;
-                heartImage3.sprite = heartHalf;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = fullHeart;
+                heartImage3.sprite = halfHeart;
                 return;
 
             case 4:
-                heartImage1.sprite = heartFull;
-                heartImage2.sprite = heartFull;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = fullHeart;
+                heartImage3.sprite = noHeart;
                 return;
 
             case 3:
-                heartImage1.sprite = heartFull;
-                heartImage2.sprite = heartHalf;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = halfHeart;
+                heartImage3.sprite = noHeart;
                 return;
 
             case 2:
-                heartImage1.sprite = heartFull;
-                heartImage2.sprite = heartEmpty;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = noHeart;
+                heartImage3.sprite = noHeart;
                 return;
 
             case 1:
-                heartImage1.sprite = heartHalf;
-                heartImage2.sprite = heartEmpty;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = halfHeart;
+                heartImage2.sprite = noHeart;
+                heartImage3.sprite = noHeart;
                 return;
 
             case 0:
-                heartImage1.sprite = heartEmpty;
-                heartImage2.sprite = heartEmpty;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = noHeart;
+                heartImage2.sprite = noHeart;
+                heartImage3.sprite = noHeart;
                 return;
 
             default:
-                heartImage1.sprite = heartEmpty;
-                heartImage2.sprite = heartEmpty;
-                heartImage3.sprite = heartEmpty;
+                heartImage1.sprite = noHeart;
+                heartImage2.sprite = noHeart;
+                heartImage3.sprite = noHeart;
                 return;
         }
     }
@@ -238,12 +281,12 @@ public class LevelManager : MonoBehaviour
 
     public void AddHealth(int healthToAdd)
     {
-        healthCount += healthToAdd;
+        health += healthToAdd;
 
         //health cannot go over max health
-        if(healthCount > maxHealth)
+        if(health > maxHealth)
         {
-            healthCount = maxHealth;
+            health = maxHealth;
         }
 
         itemPickup.Play();

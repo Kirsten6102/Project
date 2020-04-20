@@ -5,12 +5,13 @@ using UnityEngine;
 public class ExtraLife : MonoBehaviour {
 
     public int lifeToGive;
-    private LevelManager theLevelManager;
+    public int expPoints;
+    private LevelManager levelManager;
 
 	// Use this for initialization
 	void Start ()
     {
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
 	}
 	
 	// Update is called once per frame
@@ -22,7 +23,9 @@ public class ExtraLife : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            theLevelManager.AddLife(lifeToGive);
+            levelManager.AddLife(lifeToGive);
+            levelManager.experience += expPoints;
+            levelManager.experienceForLvl += expPoints;
             gameObject.SetActive(false);
         }
     }

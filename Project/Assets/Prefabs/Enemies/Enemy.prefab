@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1862364873292992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 145.54025, y: 15.779813, z: 0}
+  m_LocalPosition: {x: 133.3, y: 8.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4173570037861882}
@@ -309,8 +309,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 60
+  expPoints: 15
   deathParticales: {fileID: 1071466896533534, guid: c0e0583a34bb2a54e81517f8f48436c2,
     type: 2}
+  levelComplete: {fileID: 0}
 --- !u!212 &212078858013608352
 SpriteRenderer:
   m_ObjectHideFlags: 1

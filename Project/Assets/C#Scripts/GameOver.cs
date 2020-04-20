@@ -6,25 +6,23 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour {
 
     public string mainMenu;
+    public string firstLevel;
 
-    private LevelManager theLevelManager;
+    private LevelManager levelManager;
     
 	void Start ()
     {
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void Restart()
     {
-        PlayerPrefs.SetInt("CoinCount", 0);
-        PlayerPrefs.SetInt("PlayerLives", theLevelManager.startLives);
+        PlayerPrefs.SetInt("CoinsCollected", 0);
+        PlayerPrefs.SetInt("PlayerLives", levelManager.startLives);
+        PlayerPrefs.SetInt("Experience", levelManager.experience);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(firstLevel);
     }
 
     public void MainMenu()

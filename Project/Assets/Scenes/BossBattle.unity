@@ -1090,9 +1090,67 @@ Prefab:
       propertyPath: m_Volume
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: heartImage1
+      value: 
+      objectReference: {fileID: 824181465}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: heartImage2
+      value: 
+      objectReference: {fileID: 824181464}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: heartImage3
+      value: 
+      objectReference: {fileID: 824181463}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: mainLevelMusic
+      value: 
+      objectReference: {fileID: 1272117417}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: playerDeathSound
+      value: 
+      objectReference: {fileID: 1126285041}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: fullHeart
+      value: 
+      objectReference: {fileID: 21300714, guid: 821a0772343060946ae411eb53d63d1b,
+        type: 3}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: halfHeart
+      value: 
+      objectReference: {fileID: 21300716, guid: 821a0772343060946ae411eb53d63d1b,
+        type: 3}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: noHeart
+      value: 
+      objectReference: {fileID: 21300718, guid: 821a0772343060946ae411eb53d63d1b,
+        type: 3}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: completeLevelSound
+      value: 
+      objectReference: {fileID: 791565800}
+    - target: {fileID: 114470285625858156, guid: d480999ae5eb7774db5d81210f30804d,
+        type: 2}
+      propertyPath: expText
+      value: 
+      objectReference: {fileID: 824181466}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d480999ae5eb7774db5d81210f30804d, type: 2}
   m_IsPrefabParent: 0
+--- !u!82 &791565800 stripped
+AudioSource:
+  m_PrefabParentObject: {fileID: 82591358991211776, guid: d480999ae5eb7774db5d81210f30804d,
+    type: 2}
+  m_PrefabInternal: {fileID: 791565799}
 --- !u!1001 &824181462
 Prefab:
   m_ObjectHideFlags: 0
@@ -1103,12 +1161,12 @@ Prefab:
     - target: {fileID: 224953386082685220, guid: e11fa8d2ee743724c9e6f48143c21cbf,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 368
+      value: 369
       objectReference: {fileID: 0}
     - target: {fileID: 224953386082685220, guid: e11fa8d2ee743724c9e6f48143c21cbf,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 207
+      value: 207.5
       objectReference: {fileID: 0}
     - target: {fileID: 224953386082685220, guid: e11fa8d2ee743724c9e6f48143c21cbf,
         type: 2}
@@ -1274,7 +1332,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1439631284045576, guid: e11fa8d2ee743724c9e6f48143c21cbf, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736168326153220, guid: e11fa8d2ee743724c9e6f48143c21cbf,
+        type: 2}
+      propertyPath: firstLevel
+      value: Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114699190373855078, guid: e11fa8d2ee743724c9e6f48143c21cbf,
+        type: 2}
+      propertyPath: m_Text
+      value: Restart Game
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e11fa8d2ee743724c9e6f48143c21cbf, type: 2}
@@ -1297,6 +1365,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 824181462}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &824181466 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114786209655820678, guid: e11fa8d2ee743724c9e6f48143c21cbf,
+    type: 2}
+  m_PrefabInternal: {fileID: 824181462}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &875096521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,6 +1830,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1126285041 stripped
+AudioSource:
+  m_PrefabParentObject: {fileID: 82571108951518618, guid: d480999ae5eb7774db5d81210f30804d,
+    type: 2}
+  m_PrefabInternal: {fileID: 791565799}
 --- !u!1 &1147827990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,6 +1893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  expPoints: 0
   deathParticales: {fileID: 1641740989680748, guid: b995d92984bc7884cbb6cdeda7d00f1f,
     type: 2}
   levelComplete: {fileID: 1152915171}

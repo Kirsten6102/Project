@@ -42,13 +42,13 @@ public class BossScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(theLevelManager.respawnCoActive)
+        if(theLevelManager.respawnCoroActive)
         {
             bossActive = false;
             waitForRespawn = true;
         }
 
-        if(waitForRespawn && !theLevelManager.respawnCoActive)
+        if(waitForRespawn && !theLevelManager.respawnCoroActive)
         {
             boss.SetActive(false);
             dropCount = timeBetweenDrops;

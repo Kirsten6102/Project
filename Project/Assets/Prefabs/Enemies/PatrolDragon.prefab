@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114762523629249634}
   - component: {fileID: 114894662488247236}
   - component: {fileID: 114292720984855692}
+  - component: {fileID: 58916830974564154}
   m_Layer: 10
   m_Name: Dragon
   m_TagString: Untagged
@@ -87,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1383303003292114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.6, y: -0.5, z: 0}
+  m_LocalPosition: {x: -19.65, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4806583677528718}
@@ -113,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1987418551218994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.74, y: -0.42, z: 0}
+  m_LocalPosition: {x: 17.17, y: -0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4806583677528718}
@@ -126,7 +127,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1723695470694400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 231.2, y: 10.56, z: 0}
+  m_LocalPosition: {x: 111.25142, y: 4.613982, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4050189505219280}
@@ -155,6 +156,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58916830974564154
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1183657412365258}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.65, y: -0.74919856}
+  serializedVersion: 2
+  m_Radius: 0.40249836
 --- !u!61 &61822858025515752
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -244,11 +260,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f80e9972482a7c4fb7a6ea2db9914f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftPoint: {fileID: 0}
-  rightPoint: {fileID: 0}
-  movementSpeed: 0
+  leftPoint: {fileID: 4048078707317172}
+  rightPoint: {fileID: 4117736610676300}
+  movementSpeed: 5
   movingRight: 0
-  enemyGFX: {fileID: 0}
+  enemyGFX: {fileID: 4050189505219280}
 --- !u!114 &114894662488247236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,6 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  expPoints: 10
   deathParticales: {fileID: 1071466896533534, guid: c0e0583a34bb2a54e81517f8f48436c2,
     type: 2}
   levelComplete: {fileID: 0}

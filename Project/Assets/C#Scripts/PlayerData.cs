@@ -18,9 +18,9 @@ public class PlayerDataaa {
 
     public PlayerDataaa (LevelManager LvlMnger)
     {
-        health = LvlMnger.healthCount;
-        coinCount = LvlMnger.coinCount;
-        coinBounsLife = LvlMnger.coinBounsLife;
+        health = LvlMnger.health;
+        coinCount = LvlMnger.coinsCollected;
+        coinBounsLife = LvlMnger.bounsLifeForCoins;
         currentLives = LvlMnger.currentLives;
 
         //respawnPoint = new float[3];

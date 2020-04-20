@@ -5,13 +5,14 @@ using UnityEngine;
 public class HealthPickup : MonoBehaviour {
 
     public int healthToAdd;
+    public int expPoints;
 
-    private LevelManager theLevelManager;
+    private LevelManager levelManager;
 
 	// Use this for initialization
 	void Start ()
     {
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
 	}
 	
 
@@ -19,7 +20,9 @@ public class HealthPickup : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            theLevelManager.AddHealth(healthToAdd);
+            levelManager.AddHealth(healthToAdd);
+            levelManager.experience += expPoints;
+            levelManager.experienceForLvl += expPoints;
             gameObject.SetActive(false);
         }
     }

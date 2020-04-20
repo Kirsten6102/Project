@@ -8,8 +8,8 @@ public class LevelEnd : MonoBehaviour {
     public string sceneToLoad;
 
     private PlayerMovement thePlayer;
-    private CameraMovement theCamera;
-    private LevelManager theLevelManager;
+    private CameraMovement camera;
+    private LevelManager levelManager;
 
     public float waitToMove;
     public float waitToLoad;
@@ -20,8 +20,8 @@ public class LevelEnd : MonoBehaviour {
 	void Start ()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        theCamera = FindObjectOfType<CameraMovement>();
-        theLevelManager = FindObjectOfType<LevelManager>();
+        camera = FindObjectOfType<CameraMovement>();
+        levelManager = FindObjectOfType<LevelManager>();
 	}
 	
 	// Update is called once per frame
@@ -46,18 +46,21 @@ public class LevelEnd : MonoBehaviour {
     public IEnumerator LevelEndCoroutine()
     {
         thePlayer.canMove = false;
-        theCamera.followTarget = false;
-        theLevelManager.isInvincible = true;
+        camera.followTarget = false;
+        levelManager.canBeHurt = true;
 
-        theLevelManager.mainLevelMusic.Stop();
-        theLevelManager.CompleteLevelSound.Play();
+        levelManager.levelMusic.Stop();
+        levelManager.completeLevelSound.Play();
 
         thePlayer.playerRigidbody.velocity = Vector3.zero;
 
         //PlayerPrefs is a built in utility that retrains data between scenes
-        PlayerPrefs.SetInt("CoinCount", theLevelManager.coinCount);
-        PlayerPrefs.SetInt("PlayerLives", theLevelManager.currentLives);
-        PlayerPrefs.SetInt("PlayerHealth", theLevelManager.healthCount);
+        PlayerPrefs.SetInt("CoinsCollected", levelManager.coinsCollected);
+        PlayerPrefs.SetInt("PlayerLives", levelManager.currentLives);
+        PlayerPrefs.SetInt("PlayerHealth", levelManager.health);
+        PlayerPrefs.SetInt("Experience", levelManager.experience);
+        PlayerPrefs.SetInt("ExperienceForLvl", levelManager.experienceForLvl);
+        PlayerPrefs.SetInt("PlayerLevel", levelManager.expLevel);
 
         yield return new WaitForSeconds(waitToMove);
         movePlayer = true;
