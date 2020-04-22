@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 50524635919489118}
   - component: {fileID: 61009179601799250}
   - component: {fileID: 114141643215314410}
+  - component: {fileID: 114813581319394994}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,9 +100,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4abcc07f45b6b42a25fdd16dbbc1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 20
-  damage: 10
-  rb: {fileID: 50524635919489118}
+  speedOfBullet: 20
+  amountOfDamage: 10
+  BulletRB: {fileID: 50524635919489118}
+--- !u!114 &114813581319394994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753752381230904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e20247d2d7fae04297bc35e31472cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1
 --- !u!212 &212711833330096944
 SpriteRenderer:
   m_ObjectHideFlags: 1

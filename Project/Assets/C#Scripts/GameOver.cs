@@ -20,7 +20,9 @@ public class GameOver : MonoBehaviour {
     {
         PlayerPrefs.SetInt("CoinsCollected", 0);
         PlayerPrefs.SetInt("PlayerLives", levelManager.startLives);
-        PlayerPrefs.SetInt("Experience", levelManager.experience);
+        PlayerPrefs.SetInt("Experience", 0);
+        PlayerPrefs.SetInt("ExperienceForLvl", 0);
+        PlayerPrefs.SetInt("PlayerLevel", 1);
 
         SceneManager.LoadScene(firstLevel);
     }

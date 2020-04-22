@@ -2,38 +2,38 @@
 
 public class CameraMovement : MonoBehaviour {
 
-    public GameObject target;
+    public GameObject player;
     public float followDistance;
 
-    private Vector3 offset;
-    private Vector3 targetPosition;
-    public float smoothMovement;
+    private Vector3 offsetFromPlayer;
+    private Vector3 playerPosition;
+    public float smoothTheMovement;
 
-    public bool followTarget;
+    public bool followPlayer;
 
     void Start()
     {
-        offset = transform.position - target.transform.position;
-        followTarget = true;
+        offsetFromPlayer = transform.position - player.transform.position;
+        followPlayer = true;
     }
 
     void Update()
     {
-        if(followTarget)
+        if(followPlayer)
         {
-            transform.position = target.transform.position + offset;
+            transform.position = player.transform.position + offsetFromPlayer;
 
             //setting value camera will move to
-            targetPosition = new Vector3(target.transform.position.x, transform.position.y, transform.position.z);
+            playerPosition = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
 
             //moves camera ahead if facing right or back if facing left
-            if (target.transform.localScale.x > 0f)
+            if (player.transform.localScale.x > 0f)
             {
-                targetPosition = new Vector3(targetPosition.x + followDistance, targetPosition.y, targetPosition.z);
+                playerPosition = new Vector3(playerPosition.x + followDistance, playerPosition.y, playerPosition.z);
             }
             else
             {
-                targetPosition = new Vector3(targetPosition.x - followDistance, targetPosition.y, targetPosition.z);
+                playerPosition = new Vector3(playerPosition.x - followDistance, playerPosition.y, playerPosition.z);
             }
             
         }

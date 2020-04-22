@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //only used for 'dumb' enemies
 
-public class DumbEnemyController : MonoBehaviour 
+public class DumbEnemyMovement : MonoBehaviour 
 {
     public float movementSpeed;
     private bool canMove;

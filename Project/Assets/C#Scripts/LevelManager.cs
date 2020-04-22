@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     public Sprite noHeart;
 
     public int startLives;
-    public int currentLives;
+    public int lives;
     public Text livesText;
 
     public int maxHealth;
@@ -41,7 +41,8 @@ public class LevelManager : MonoBehaviour
     public int expLevel;
     public Text expText;
     public Text expLevelText;
-    
+
+    public GameObject bulletPrefab;
 
     public bool canBeHurt;
 
@@ -58,6 +59,7 @@ public class LevelManager : MonoBehaviour
     void Start() 
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
+        bulletPrefab.GetComponent<BulletMovement>();
         levelMusic.Play();
 
         if (PlayerPrefs.HasKey("PlayerHealth"))
@@ -71,14 +73,14 @@ public class LevelManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("PlayerLives"))
         {
-            currentLives = PlayerPrefs.GetInt("PlayerLives");
+            lives = PlayerPrefs.GetInt("PlayerLives");
             UpdateHealth();
         } else
         {
-            currentLives = startLives;
+            lives = startLives;
         }
         
-        livesText.text = "Lives x " + currentLives;
+        livesText.text = "Lives x " + lives;
 
 
         if (PlayerPrefs.HasKey("CoinsCollected"))
@@ -129,14 +131,15 @@ public class LevelManager : MonoBehaviour
         {
             expLevel += 1;
             expLevelText.text = "Lvl: " + expLevel;
+            bulletPrefab.GetComponent<BulletMovement>().amountOfDamage += 5;
             experienceForLvl -= 100;
         }
  
 
         if (bounsLifeForCoins >= 20)
         {
-            currentLives += 1;
-            livesText.text = "Lives x " + currentLives;
+            lives += 1;
+            livesText.text = "Lives x " + lives;
             bounsLifeForCoins -= 20;
             itemPickup.Play();
         }
@@ -145,10 +148,10 @@ public class LevelManager : MonoBehaviour
 
     public void Respawn()
     {
-        currentLives -= 1;
-        livesText.text = "Lives x " + currentLives;
+        lives -= 1;
+        livesText.text = "Lives x " + lives;
 
-        if(currentLives > 0)
+        if(lives > 0)
         {
             thePlayer.gameObject.SetActive(false);
             StartCoroutine("RespawnCoroutine");
@@ -182,11 +185,12 @@ public class LevelManager : MonoBehaviour
         bounsLifeForCoins = 0;
         experience = 0;
         expText.text = "XP: " + experience;
+        experienceForLvl = 0;
 
         for (int i = 0; i < resetObjects.Length; i++)
         {
             resetObjects[i].gameObject.SetActive(true);
-            resetObjects[i].ResetWorld();
+            resetObjects[i].ResetLevel();
         }
 
         thePlayer.transform.position = thePlayer.respawnPoint;
@@ -203,15 +207,15 @@ public class LevelManager : MonoBehaviour
     }
     
 
-    public void HurtPlayer(int damageTaken)
+    public void HurtPlayer(int damageCausedByEnemy)
     {
         //player cannot be hurt while invincible (are being knocked back)
         if (!canBeHurt)
         {
-            health -= damageTaken;
+            health -= damageCausedByEnemy;
             UpdateHealth();
 
-            thePlayer.KnockBack();
+            thePlayer.KnockBackFromEnemy();
             thePlayer.playerDamage.Play();
         }
         
@@ -265,9 +269,9 @@ public class LevelManager : MonoBehaviour
                 return;
 
             default:
-                heartImage1.sprite = noHeart;
-                heartImage2.sprite = noHeart;
-                heartImage3.sprite = noHeart;
+                heartImage1.sprite = fullHeart;
+                heartImage2.sprite = fullHeart;
+                heartImage3.sprite = fullHeart;
                 return;
         }
     }
@@ -275,8 +279,8 @@ public class LevelManager : MonoBehaviour
     public void AddLife(int livesToAdd)
     {
         itemPickup.Play();
-        currentLives += livesToAdd;
-        livesText.text = "Lives x " + currentLives;
+        lives += livesToAdd;
+        livesText.text = "Lives x " + lives;
     }
 
     public void AddHealth(int healthToAdd)
@@ -292,87 +296,5 @@ public class LevelManager : MonoBehaviour
         itemPickup.Play();
         UpdateHealth();
     }
-
-    //public void Save()
-    //{
-    //    BinaryFormatter bf = new BinaryFormatter();
-    //    FileStream file = File.Open(Application.persistentDataPath + "/GameSave.dat", FileMode.Open);
-
-    //    PlayerData data = new PlayerData();
-    //    data.health = healthCount;
-    //    data.coinCount = coinCount;
-    //    data.coinBounsLife = coinBounsLife;
-    //    data.currentLives = currentLives;
-
-    //    bf.Serialize(file, data);
-    //    file.Close();
-
-    //}
-
-    //public void SaveGame()
-    //{
-    //    BinaryFormatter formatter = new BinaryFormatter();
-
-    //    //Application.persistnetDataPath will find and use a system file path that is unlikely to change
-    //    string path = Application.persistentDataPath + "/Gamesave.dat";
-    //    FileStream file = new FileStream(path, FileMode.Create);
-
-    //    PlayerData data = new PlayerData();
-    //    ////data.health = healthCount;
-    //    ////data.coinCount = coinCount;
-    //    ////data.coinBounsLife = coinBounsLife;
-    //    ////data.currentLives = currentLives;
-
-    //    formatter.Serialize(file, data);
-    //    file.Close();
-
-    //}
-
-
-    //public void LoadGame()
-    //{
-    //    string path = Application.persistentDataPath + "/Gamesave.dat";
-
-    //    if (File.Exists(path))
-    //    {
-    //        BinaryFormatter formatter = new BinaryFormatter();
-    //        FileStream file = new FileStream(path, FileMode.Open);
-
-    //        PlayerData data = formatter.Deserialize(file) as PlayerData;
-    //        file.Close();
-
-    //        healthCount = data.health;
-    //        coinCount = data.coinCount;
-    //        coinBounsLife = data.coinBounsLife;
-    //        currentLives = data.currentLives;
-    //        //public int activeScene;
-
-    //        //Vector3 respawnPoint;
-    //        //respawnPoint.x = data.respawnPoint[0];
-    //        //respawnPoint.y = data.respawnPoint[1];
-    //        //respawnPoint.z = data.respawnPoint[2];
-    //        //transform.position = respawnPoint;
-
-
-    //        //return data;
-
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Save file not found in " + path);
-    //        //return null;
-    //    }
-    //}
     
 }
-
-//[Serializable]
-//class PlayerData
-//{
-//    public int health;
-//    public int coinCount;
-//    public int coinBounsLife;
-//    public int currentLives;
-//    public int activeScene;
-//}
-

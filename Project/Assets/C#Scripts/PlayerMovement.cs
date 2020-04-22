@@ -21,20 +21,19 @@ public class PlayerMovement : MonoBehaviour
 
     public LevelManager levelManager;
 
-    public GameObject stompBox;
     public float knockForce;
-    public float knockLength;
-    private float knockCounter;
+    public float knockbackLength;
+    private float knockback;
 
     public float invincibilityLength;
-    private float invincibilityCounter;
+    private float invincibility;
 
     public AudioSource jumpSound;
     public AudioSource playerDamage;
 
     public GameObject firePoint;
 
-    // Use this for initialization
+
     void Start () {
 
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -47,13 +46,12 @@ public class PlayerMovement : MonoBehaviour
         canMove = true;
     }
 	
-	// Update is called once per frame
 	void Update () {
 
         //Checks if player is on ground or not
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 
-        if (knockCounter <= 0 && canMove)
+        if (knockback <= 0 && canMove)
         {
             if (Input.GetAxisRaw("Horizontal") > 0f)
             {
@@ -90,9 +88,9 @@ public class PlayerMovement : MonoBehaviour
                 playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, jumpSpeed, 0f);
                 jumpSound.Play();
             }
-        } else if (knockCounter > 0)
+        } else if (knockback > 0)
         {
-            knockCounter -= Time.deltaTime;
+            knockback -= Time.deltaTime;
             if(transform.localScale.x > 0)
             {
                 playerRigidbody.velocity = new Vector3(-knockForce, knockForce, 0f);
@@ -103,33 +101,22 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        if(invincibilityCounter > 0)
+        if(invincibility > 0)
         {
-            invincibilityCounter -= Time.deltaTime;
-        } else if(invincibilityCounter <= 0)
+            invincibility -= Time.deltaTime;
+        } else if(invincibility <= 0)
         {
             levelManager.canBeHurt = false;
         }
-
-
+        
         //Sets speed and velocity of rigidbody for the player animation
         /*Mathf.Abs = math function that turns a negitive vaule into a positive so animation doesn't stop
         when player is walking left.*/
         playerAnim.SetFloat("Speed", Mathf.Abs(playerRigidbody.velocity.x));
         playerAnim.SetBool("Grounded", isGrounded);
 
-
-        if(playerRigidbody.velocity.y < 0)
-        {
-            stompBox.SetActive(true);
-        } else
-        {
-            stompBox.SetActive(false);
-        }
-
     }
-
-
+    
 
     //Trigger death zone and checkpoints
     void OnTriggerEnter2D(Collider2D other)
@@ -147,19 +134,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    public void KnockBackFromEnemy()
     {
-        if(other.gameObject.tag == "MovingPlatform")
-        {
-            transform.parent = other.gameObject.transform;
-        }
-    }
-    
-
-    public void KnockBack()
-    {
-        knockCounter = knockLength;
-        invincibilityCounter = invincibilityLength;
+        knockback = knockbackLength;
+        invincibility = invincibilityLength;
         levelManager.canBeHurt = true;
 
     }

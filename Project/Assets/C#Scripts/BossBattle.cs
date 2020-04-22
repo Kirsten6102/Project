@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossScript : MonoBehaviour {
+public class BossBattle : MonoBehaviour {
 
     public bool bossActive;
 
@@ -14,18 +14,21 @@ public class BossScript : MonoBehaviour {
     public Transform dropSawSpawnPoint;
 
     public Vector3 bossSpawnPoint;
+    public GameObject bossSpawn;
     public GameObject boss;
     public GameObject dropSaw;
 
     private CameraMovement theCamera;
-    private LevelManager theLevelManager;
+    private LevelManager lvlManager;
     
     public bool takeDamage;
     public int bossStartHealth;
-    private int bossCurrentHealth;
+    private int bossHealth;
     
     public GameObject levelComplete;
+    public GameObject bossAIScript;
 
+    private BoxCollider2D collider;
     public bool waitForRespawn;
 
 	// Use this for initialization
@@ -34,35 +37,40 @@ public class BossScript : MonoBehaviour {
         dropCount = timeBetweenDrops;
         
         theCamera = FindObjectOfType<CameraMovement>();
-        theLevelManager = FindObjectOfType<LevelManager>();
-        
-        bossCurrentHealth = bossStartHealth;
+        lvlManager = FindObjectOfType<LevelManager>();
+        collider = GetComponent<BoxCollider2D>();
+
+        boss.SetActive(false);
+        collider.enabled = true;
+        bossHealth = bossStartHealth;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if(theLevelManager.respawnCoroActive)
+        if(lvlManager.respawnCoroActive)
         {
             bossActive = false;
             waitForRespawn = true;
         }
 
-        if(waitForRespawn && !theLevelManager.respawnCoroActive)
+        if(waitForRespawn && !lvlManager.respawnCoroActive)
         {
             boss.SetActive(false);
             dropCount = timeBetweenDrops;
-            theCamera.followTarget = true;
+            theCamera.followPlayer = true;
         }
 
         if (bossActive)
         {
-            theCamera.followTarget = false;
-            theCamera.transform.position = Vector3.Lerp(theCamera.transform.position, new Vector3(transform.position.x, theCamera.transform.position.y, theCamera.transform.position.z), theCamera.smoothMovement * Time.deltaTime);
+            theCamera.followPlayer = false;
+            theCamera.transform.position = Vector3.Lerp(theCamera.transform.position, new Vector3(transform.position.x, 
+                theCamera.transform.position.y, theCamera.transform.position.z), theCamera.smoothTheMovement * Time.deltaTime);
 
+            collider.enabled = false;
             boss.SetActive(true);
-            bossSpawnPoint = transform.position;
-            
+            bossAIScript.GetComponent<EnemyAI>().enabled = true;
+            bossSpawnPoint = bossSpawn.transform.position;
 
             //relates to dropsaws
             if (dropCount > 0)
@@ -79,9 +87,9 @@ public class BossScript : MonoBehaviour {
 
             if (takeDamage)
             {
-                bossCurrentHealth -= 1;
+                bossHealth -= 1;
 
-                if (bossCurrentHealth <= 0)
+                if (bossHealth <= 0)
                 {
                     levelComplete.SetActive(true);
                     gameObject.SetActive(false);
@@ -100,6 +108,4 @@ public class BossScript : MonoBehaviour {
         }
     }
     
-    
-
 }

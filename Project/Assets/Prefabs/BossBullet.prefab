@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 50460164621286406}
   - component: {fileID: 61040559893778008}
   - component: {fileID: 114716799309587926}
+  - component: {fileID: 114182269925863462}
   m_Layer: 0
   m_Name: BossBullet
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1332038038935232}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 113.138336, y: 18.778587, z: 0}
+  m_LocalPosition: {x: 131.3095, y: -4.4702682, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,6 +89,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.22}
   m_EdgeRadius: 0
+--- !u!114 &114182269925863462
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1332038038935232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e20247d2d7fae04297bc35e31472cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 1
 --- !u!114 &114716799309587926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,9 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac310236f1d1fc84bb56985767563df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 20
-  damage: 1
-  rb: {fileID: 50460164621286406}
+  speedOfBullet: 20
+  damageToPlayer: 1
+  bulletRB: {fileID: 50460164621286406}
 --- !u!212 &212396011886574144
 SpriteRenderer:
   m_ObjectHideFlags: 1

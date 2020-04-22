@@ -8,25 +8,15 @@ public class MainMenu : MonoBehaviour {
 
     public int startLives;
 
+    public GameObject changeDifficulty;
+
     //loads new game
     public void NewGame() 
     {
-        SceneManager.LoadScene(firstLevel);
-
-        PlayerPrefs.SetInt("CoinsCollected", 0);
-        PlayerPrefs.SetInt("PlayerLives", startLives);
-        PlayerPrefs.SetInt("Experience", 0);
-        PlayerPrefs.SetInt("ExperienceForLvl", 0);
-        PlayerPrefs.SetInt("PlayerLevel", 1);
+        changeDifficulty.gameObject.SetActive(true);
     }
 
-
-    //loads saved game
-    public void Continue()
-    {
-        
-    }
-
+    //displays help menu
     public void Help()
     {
         helpMenu.gameObject.SetActive(true);

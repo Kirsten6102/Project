@@ -1,19 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossWeapon : MonoBehaviour {
 
-
-    public Transform firePoint;
+    public Transform pointToFireFrom;
     public GameObject bulletPrefab;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         if (Input.GetButtonDown("Horizontal"))
@@ -24,10 +16,7 @@ public class BossWeapon : MonoBehaviour {
 
     void Shoot()
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Instantiate(bulletPrefab, pointToFireFrom.position, pointToFireFrom.rotation);
     }
-
-
-
-
+    
 }

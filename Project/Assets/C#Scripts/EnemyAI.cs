@@ -62,11 +62,13 @@ public class EnemyAI : MonoBehaviour {
         //flips enemy's graphics
         if (force.x >= 0.1f)
         {
-            enemyGFX.localScale = new Vector3(1f, 1f, 0f);
+            //enemyGFX.localScale = new Vector3(1f, 1f, 0f);
+            transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if (force.x <= -0.1f)
         {
-            enemyGFX.localScale = new Vector3(-1f, 1f, 0f);
+            //enemyGFX.localScale = new Vector3(-1f, 1f, 0f);
+            transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
 
     }

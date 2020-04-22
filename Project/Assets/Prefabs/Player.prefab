@@ -77,23 +77,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1395511200396458
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4084301088434890}
-  - component: {fileID: 65891192702497592}
-  - component: {fileID: 114226247403400594}
-  m_Layer: 8
-  m_Name: HeadStomper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1442407403611842
 GameObject:
   m_ObjectHideFlags: 1
@@ -126,19 +109,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4084301088434890
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1395511200396458}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.41, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4124716424299492}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4124716424299492
 Transform:
   m_ObjectHideFlags: 1
@@ -146,11 +116,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1385848214596262}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 460.8, y: 3.1, z: 0}
+  m_LocalPosition: {x: 16.5, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4325657390898862}
-  - {fileID: 4084301088434890}
   - {fileID: 4675189024436614}
   - {fileID: 4702114954745650}
   m_Father: {fileID: 0}
@@ -193,7 +162,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4124716424299492}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4702114954745650
 Transform:
@@ -208,7 +177,7 @@ Transform:
   - {fileID: 4570171668875390}
   - {fileID: 4900367619993226}
   m_Father: {fileID: 4124716424299492}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4900367619993226
 Transform:
@@ -268,18 +237,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.314237, y: 2.6400719}
   m_EdgeRadius: 0
---- !u!65 &65891192702497592
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1395511200396458}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.9066911, y: 0.65, z: 1}
-  m_Center: {x: 0.00000023841858, y: -0.031849265, z: 0}
 --- !u!82 &82364051176752860
 AudioSource:
   m_ObjectHideFlags: 1
@@ -483,8 +440,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 15
+  sprintSpeed: 1.5
   playerRigidbody: {fileID: 0}
-  jumpSpeed: 15
+  jumpSpeed: 17
   canMove: 0
   groundCheck: {fileID: 4325657390898862}
   groundCheckRadius: 0.5
@@ -493,25 +451,13 @@ MonoBehaviour:
     m_Bits: 512
   isGrounded: 0
   respawnPoint: {x: 0, y: 0, z: 0}
-  theLevelManager: {fileID: 0}
-  stompBox: {fileID: 1395511200396458}
+  levelManager: {fileID: 0}
   knockForce: 6
-  knockLength: 0.3
+  knockbackLength: 0.5
   invincibilityLength: 1
   jumpSound: {fileID: 82437158349135616}
   playerDamage: {fileID: 82364051176752860}
   firePoint: {fileID: 1304444296037802}
---- !u!114 &114226247403400594
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1395511200396458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6262f1342ca96b84b94b0e8a8a3457d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &212269955935755300
 SpriteRenderer:
   m_ObjectHideFlags: 1

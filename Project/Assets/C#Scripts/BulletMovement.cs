@@ -1,27 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BulletMovement : MonoBehaviour {
 
-    public float Speed;
-    public int damage;
-    public Rigidbody2D rb;
+
+
+    public float speedOfBullet;
+    public int amountOfDamage;
+    public Rigidbody2D BulletRB;
 
     // Use this for initialization
     void Start()
     {
-        rb.velocity = transform.right * Speed;
+        BulletRB.velocity = transform.right * speedOfBullet;
     }
 
-
-
-    void OnTriggerEnter2D(Collider2D hitInfo)
+    
+    void OnTriggerEnter2D(Collider2D hit)
     {
-        Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy != null)
+        Enemy theEnemy = hit.GetComponent<Enemy>();
+        if (theEnemy != null)
         {
-            enemy.TakeDamage(damage);
+            theEnemy.TakeDamage(amountOfDamage);
             Destroy(gameObject);
         }
         

@@ -1,31 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class BossBulletMovement : MonoBehaviour {
 
-    public float Speed;
-    public int damage;
-    public Rigidbody2D rb;
-
+    public float speedOfBullet;
+    public int damageToPlayer;
+    public Rigidbody2D bulletRB;
+    private LevelManager lvlManager;
+    
 
     // Use this for initialization
     void Start ()
     {
-        rb.velocity = transform.right * Speed;
+        bulletRB.velocity = transform.right * speedOfBullet;
+        lvlManager = FindObjectOfType<LevelManager>();
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    
 
     void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        LevelManager player = hitInfo.GetComponent<LevelManager>();
-        if (gameObject.tag == "Player")
+        if (gameObject.tag == "Player" != null)
         {
-            player.HurtPlayer(damage);
+            lvlManager.HurtPlayer(damageToPlayer);
             Destroy(gameObject);
         }
 

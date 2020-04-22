@@ -8,7 +8,7 @@ public class LevelEnd : MonoBehaviour {
     public string sceneToLoad;
 
     private PlayerMovement thePlayer;
-    private CameraMovement camera;
+    private CameraMovement theCamera;
     private LevelManager levelManager;
 
     public float waitToMove;
@@ -20,7 +20,7 @@ public class LevelEnd : MonoBehaviour {
 	void Start ()
     {
         thePlayer = FindObjectOfType<PlayerMovement>();
-        camera = FindObjectOfType<CameraMovement>();
+        theCamera = FindObjectOfType<CameraMovement>();
         levelManager = FindObjectOfType<LevelManager>();
 	}
 	
@@ -38,7 +38,6 @@ public class LevelEnd : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            //SceneManager.LoadScene(sceneToLoad);
             StartCoroutine("LevelEndCoroutine");
         }
     }
@@ -46,7 +45,7 @@ public class LevelEnd : MonoBehaviour {
     public IEnumerator LevelEndCoroutine()
     {
         thePlayer.canMove = false;
-        camera.followTarget = false;
+        theCamera.followPlayer = false;
         levelManager.canBeHurt = true;
 
         levelManager.levelMusic.Stop();
@@ -56,11 +55,12 @@ public class LevelEnd : MonoBehaviour {
 
         //PlayerPrefs is a built in utility that retrains data between scenes
         PlayerPrefs.SetInt("CoinsCollected", levelManager.coinsCollected);
-        PlayerPrefs.SetInt("PlayerLives", levelManager.currentLives);
+        PlayerPrefs.SetInt("PlayerLives", levelManager.lives);
         PlayerPrefs.SetInt("PlayerHealth", levelManager.health);
         PlayerPrefs.SetInt("Experience", levelManager.experience);
         PlayerPrefs.SetInt("ExperienceForLvl", levelManager.experienceForLvl);
         PlayerPrefs.SetInt("PlayerLevel", levelManager.expLevel);
+        
 
         yield return new WaitForSeconds(waitToMove);
         movePlayer = true;
@@ -70,3 +70,4 @@ public class LevelEnd : MonoBehaviour {
     }
     
 }
+
